@@ -25,7 +25,7 @@ class BaseHandler(webapp2.RequestHandler):
         if not params:
             params = {}
         #cookies
-        cookie = self.request.cookies.get
+        cookie = self.request.cookies.get("ninja-cookie")
 
         if cookie:
             params["piskotki"] = True
@@ -41,6 +41,8 @@ class BaseHandler(webapp2.RequestHandler):
 
         template = jinja_env.get_template(view_filename)
         return self.response.out.write(template.render(params))
+
+
 
 
 class MainHandler(BaseHandler):
