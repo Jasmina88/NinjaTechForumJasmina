@@ -11,9 +11,17 @@
             </div>
 
             <div class="panel-body">
-                <p><strong>Author: </strong>{{ topic.author_email }}</p>
+                <p><strong>Author: </strong>{{ topic.author_email }}({{topic.created.strftime("%d.%m.%Y at %H:%M")}})</p>
 
                 <p>{{ topic.content }}</p>
+                    {% if user %}
+                        {% if topic.author_email == user.email() or user.admin  %}
+                        <form action="/topic/{{topic.key.id()}}/delete" method="post">
+                            <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                            <button class="btn btn-danger">Delete topic</button>
+                        </form>
+                        {% endif %}
+                    {% endif %}
             </div>
         </div>
     </div>
